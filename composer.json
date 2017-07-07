@@ -1,0 +1,23 @@
+{
+    "name": "manarch/crossborder",
+    "description": "this is yjpay crossborder php SDK",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "manarch",
+            "email": "manarchliu@163.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+      "php": ">=5.3.0",
+      "guzzlehttp/guzzle": "~6.2.1",
+      "overtrue/validation":"~2.0.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Yjpay\\Crossborder\\": "src/"
+        }
+    }
+}
