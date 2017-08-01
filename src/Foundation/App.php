@@ -161,15 +161,17 @@ class App
 
         $this->error = $validator->passes() ?: $validator->errors();
 
-        //var_dump($errorType);
+    }
 
-        // if($this->error !== true && is_string($this->error)){
-        //
-        //     $this->error .= json_encode($errorType);
-        //
-        // }else{
-        //     $this->error = $errorType;
-        // }
+    public function validationA(array $data, array $rules){
+
+        if($this->error !== true){
+            return false;
+        }
+        // 示例化验证器
+        $factory = new ValidatorFactory(new Translator);
+        // 验证数据
+        return  $factory->make($data , $rules );
 
     }
 
@@ -194,8 +196,6 @@ class App
                 $response = $client->post('/gateway.html',['form_params'=>$requestData]);
                 break;
         }
-
-        //var_dump(json_decode($response->getBody(), 1)) ;
 
         if($response->getStatusCode() == 200){
             return json_decode($response->getBody(), 1);
