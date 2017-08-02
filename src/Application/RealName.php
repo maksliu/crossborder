@@ -15,7 +15,7 @@ class RealName extends App{
     public $service = 'realNameQuery';
 
     private $data = [
-        //'service'=>'realNameQuery',
+        'service'=>'realNameQuery',
     ];
 
     public function __construct(array $developerInfo, array $data){

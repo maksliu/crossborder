@@ -88,12 +88,10 @@ class App
 
     public function __construct(array $configData, array $waitRequestData, array $requestRules)
     {
-        //var_dump($configData);
         $this->mergeConfigData($configData);
 
         $this->mergeWaitRequestData($waitRequestData);
         $this->mergeRequestRules($requestRules);
-//var_dump($this);
     }
 
     /**
@@ -171,7 +169,8 @@ class App
         // 示例化验证器
         $factory = new ValidatorFactory(new Translator);
         // 验证数据
-        return  $factory->make($data , $rules );
+        $validator = $factory->make($data , $rules );
+        return   $validator->passes() ?: $validator->errors();
 
     }
 
@@ -199,6 +198,8 @@ class App
 
         if($response->getStatusCode() == 200){
             return json_decode($response->getBody(), 1);
+        }else{
+            return ['error'=>"请求错误"];
         }
     }
 
@@ -211,7 +212,7 @@ class App
         $html ='';
         $html .= '<form action="'.$url.'/gateway.html" method="POST" name="'.$this->configData['service'].'-form">';
         foreach($requestData as $key => $value){
-            $html .= '<input type="hidden" name="'.$key.'" value="'.$value.'">';
+            $html .= '<input type=\'hidden\' name=\''.$key.'\' value=\''.$value.'\'>';
         }
         $html .= '<button type="submit">Submit</button>';
         $html .= '</form>';
@@ -223,7 +224,7 @@ class App
      */
     private function buildRequestData(){
         $this->waitRequestData = array_merge($this->waitRequestData,$this->configData);
-        $this->waitRequestData['orderNo'] = 'Q-'.date('YmdHis').mt_rand(100000,999999);
+        $this->waitRequestData['orderNo'] = 'Q'.date('YmdHis').mt_rand(100000,999999);
         $this->requestFilterAndSort();
         $this->waitRequestData['sign'] = $this->getSignString($this->waitRequestData);
         $this->validation($this->waitRequestData,$this->requestRules);
@@ -236,10 +237,7 @@ class App
      * @return mixed|string|错误信息
      */
     public function send($method){
-        //return $this->error;
-        //return $this->configData;
         $this->buildRequestData();
-        //return $this->error;
         if($this->error !== true){
             $this->log->addWarning($this->error);
             return $this->error;
@@ -282,7 +280,6 @@ class App
         }
 
         $waitString = trim($waitString,'&');
-        //echo $waitString.$this->secretKey."\n\n";
         return md5($waitString.$this->secretKey);
     }
 }

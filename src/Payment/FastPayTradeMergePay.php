@@ -9,13 +9,25 @@ class FastPayTradeMergePay extends App {
         'buyerUserId'=>'size:20',
         'buyerRealName'=>'between:1,64',
         'tradeInfo'=>'required',
-        'paymentType'=>'required|in:BALANCE,QUICKPAY,ONLINEBANK,THIRDSCANPAY,OFFLINEPAY,PAYMENT_TYPE_SUPER,PAYMENT_TYPE_YJ,PAYMENT_TYPE_WECHAT,PAYMENT_TYPE_UPMP',
+        'paymentType'=>'in:BALANCE,QUICKPAY,ONLINEBANK,THIRDSCANPAY,OFFLINEPAY,PAYMENT_TYPE_SUPER,PAYMENT_TYPE_YJ,PAYMENT_TYPE_WECHAT,PAYMENT_TYPE_UPMP',
         'userTerminalType'=>'in:PC,MOBILE',
         'buyerOrgName'=>'max:180',
         'behavior'=>'between:0,255',
         'mainTradeNo'=>'max:180',
         'customerNo'=>'max:180',
-        'merchOrderNo'=>'required|between:16,40'
+        'merchOrderNo'=>'required|between:16,40',
+        'returnUrl'=>'required|max:180',
+        'notifyUrl'=>'required|max:180',
+    );
+
+    private $PCrules = array(
+        'paymentType'=>'in:BALANCE,QUICKPAY,ONLINEBANK,THIRDSCANPAY,OFFLINEPAY',
+        'userTerminalType'=>'required|in:PC',
+    );
+
+    private $MobileRules = array(
+        'paymentType'=>'in:PAYMENT_TYPE_SUPER,PAYMENT_TYPE_YJ,PAYMENT_TYPE_WECHAT,PAYMENT_TYPE_UPMP',
+        'userTerminalType'=>'required|in:MOBILE',
     );
 
     private $tradeInfoRules = array(
@@ -36,15 +48,41 @@ class FastPayTradeMergePay extends App {
     private $tradeInfoErrorType = true;
 
     private $data = [
-        'service'=>'fastPayTradeMergePay'
+        'service'=>'fastPayTradeMergePay',
+        'version'=>'2.0'
     ];
+
+    private $PCdata = [
+        'service'=>'fastPayTradeMergePay',
+        'version'=>'2.0',
+        'userTerminalType'=>'PC'
+    ];
+
+    private $MobileData = [
+        'service'=>'fastPayTradeMergePay',
+        'version'=>'2.0',
+        'userTerminalType'=>'MOBILE'
+    ];
+
+
 
     public $service = 'fastPayTradeMergePay';
 
-    public function __construct(array $developerInfo, array $parameter){
+    public function __construct(array $developerInfo, array $parameter, $payType = ''){
         $developerInfo['service'] = $this->service;
-        $this->data = array_merge($this->data, $parameter);
-        parent::__construct($developerInfo, $this->data ,$this->rules);
+        switch ($payType) {
+          case 'pc':
+            $this->pcPay($developerInfo,$parameter);
+            break;
+
+          case 'mobile':
+              $this->MobilePay($developerInfo,$parameter);
+            break;
+
+          default:
+            $this->pay($developerInfo,$parameter);
+            break;
+        }
     }
 
     private function validationTradeInfo(){
@@ -61,7 +99,25 @@ class FastPayTradeMergePay extends App {
 
     }
 
+    private function pay($developerInfo,$parameter){
+       $this->data = array_merge($this->data, $parameter);
+       parent::__construct($developerInfo, $this->data ,$this->rules);
+    }
+
+    private function pcPay($developerInfo,$parameter){
+       $this->data = array_merge($this->PCdata, $parameter);
+       $this->rules = array_merge($this->rules, $this->PCrules);
+       parent::__construct($developerInfo, $this->data ,$this->rules);
+    }
+
+    private function MobilePay($developerInfo,$parameter){
+       $this->data = array_merge($this->MobileData, $parameter);
+       $this->rules = array_merge($this->rules, $this->MobileRules);
+       parent::__construct($developerInfo, $this->data ,$this->rules);
+    }
+
     public function run(){
+        $this->validationTradeInfo();
         if($this->tradeInfoErrorType !== true ){
           return $this->tradeInfoErrorType;
         }

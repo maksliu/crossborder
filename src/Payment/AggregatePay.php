@@ -52,74 +52,25 @@ class AggregatePay extends App{
     );
 
     private $MobileRules = array(
-        "merchOrderNo"=>'required|between:16,40',
-        'returnUrl'=>'required|max:180',
-        'notifyUrl'=>'required|max:180',
-        'buyerUserId'=>'between:1,64',
         'userTerminalType'=>'required|in:MOBILE',
-        'tradeName'=>'max:180',
-        'goodsType'=>'max:64',
-        'goodsName'=>'max:64',
-        'memo'=>'max:180',
-        'sellerUserId'=>'size:20',
         'tradeAmount'=>'required|numeric',
-        'openid'=>'min:32',
-        'chargeExtends'=>'max:500',
-        'autoCloseDuration'=>'integer',
-        'macAddress'=>'between:0,48',
-        'userEndIp'=>'ip',
         'paymentType'=>'in:PAYMENT_TYPE_SUPER,PAYMENT_TYPE_YJ,PAYMENT_TYPE_WECHAT',
-        'memberType'=>'required|in:MEMBER_TYPE_YIJI,MEMBER_TYPE_PATERN,MEMBER_TYPE_CARD',
-        'name'=>'min:2',
-        'stable'=>'boolean',
-        'mobileNo'=>'numeric',
-        'mobileNoStable'=>'boolean',
-        'cardNo'=>'between:16,19',
-        'cardNoStable'=>'boolean',
-        'certNo'=>'between:15,18',
-        'certNoStable'=>'boolean',
-        'shareProfits'=>'max:180',
-        'shareMethod'=>'in:M,S',
-        'sellerMerchantId'=>'max:180',
-        'customerNo'=>'max:32'
+        'memberType'=>'required|in:MEMBER_TYPE_YIJI,MEMBER_TYPE_PATERN,MEMBER_TYPE_CARD'
     );
 
     private $MobileWechatRules = [
-        "merchOrderNo"=>'required|between:16,40',
-        'returnUrl'=>'required|max:180',
-        'notifyUrl'=>'required|max:180',
-        'buyerUserId'=>'between:1,64',
         'userTerminalType'=>'required|in:MOBILE',
-        'tradeName'=>'max:180',
-        'goodsType'=>'max:64',
-        'goodsName'=>'max:64',
-        'memo'=>'max:180',
-        'sellerUserId'=>'size:20',
         'tradeAmount'=>'required|numeric',
         'openid'=>'required|min:32',
-        'chargeExtends'=>'max:500',
-        'autoCloseDuration'=>'integer',
-        'macAddress'=>'between:0,48',
-        'userEndIp'=>'ip',
         'paymentType'=>'required|in:PAYMENT_TYPE_WECHAT',
-        'memberType'=>'required|in:MEMBER_TYPE_YIJI,MEMBER_TYPE_PATERN,MEMBER_TYPE_CARD',
-        'name'=>'min:2',
-        'stable'=>'boolean',
-        'mobileNo'=>'numeric',
-        'mobileNoStable'=>'boolean',
-        'cardNo'=>'between:16,19',
-        'cardNoStable'=>'boolean',
-        'certNo'=>'between:15,18',
-        'certNoStable'=>'boolean',
-        'shareProfits'=>'max:180',
-        'shareMethod'=>'in:M,S',
-        'sellerMerchantId'=>'max:180',
-        'customerNo'=>'max:32'
+        'memberType'=>'required|in:MEMBER_TYPE_YIJI,MEMBER_TYPE_PATERN,MEMBER_TYPE_CARD'
     ];
 
     private $data = [
-        'service'=>'aggregatePay'
+        'service'=>'aggregatePay',
+        'userTerminalType'=>'PC'
     ];
+
     private $MobileData = [
         'service'=>'aggregatePay',
         'userTerminalType'=>'MOBILE',
@@ -132,15 +83,9 @@ class AggregatePay extends App{
         'paymentType'=>'PAYMENT_TYPE_WECHAT'
     ];
 
-    private $PayType = [
-        'Mobile',
-        'PC',
-        'MobileWechat'
-    ];
-
     public $service = 'aggregatePay';
 
-    public function __construct( array $developerInfo, array $data,$PayType = 'PC'){
+    public function __construct( array $developerInfo, array $data, $PayType = 'PC'){
 
         $developerInfo['service'] = $this->service;
         switch ($PayType) {
@@ -167,12 +112,14 @@ class AggregatePay extends App{
 
     private function MobilePay(array $developerInfo, array $data){
         $this->MobileData = array_merge($this->MobileData, $data);
-        parent::__construct($developerInfo, $this->MobileData ,$this->MobileRules);
+        $this->rules = array_merge($this->rules, $this->MobileRules);
+        parent::__construct($developerInfo, $this->MobileData ,$this->rules);
     }
 
     private function MobileWechat(array $developerInfo, array $data){
         $this->MobileWechatData = array_merge($this->MobileWechatData, $data);
-        parent::__construct($developerInfo, $this->MobileWechatData ,$this->MobileWechatRules);
+        $this->rules = array_merge($this->rules, $this->MobileWechatRules);
+        parent::__construct($developerInfo, $this->MobileWechatData ,$this->rules);
     }
 
     public function run(){
