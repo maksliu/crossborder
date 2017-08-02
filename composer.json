@@ -18,7 +18,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Yjpay\\Crossborder\\": "src/"
+            "Yjpay\\Yht\\": "src/"
         }
     }
 }

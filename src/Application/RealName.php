@@ -1,8 +1,8 @@
 <?php
 
-namespace Yjpay\Crossborder\Application;
+namespace Yjpay\Yht\Application;
 
-use Yjpay\Crossborder\Foundation\App;
+use Yjpay\Yht\Foundation\App;
 
 class RealName extends App{
 

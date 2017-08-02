@@ -8,9 +8,9 @@
  * with this source code in the file LICENSE.
  */
 
-namespace Yjpay\Crossborder\Payment;
+namespace Yjpay\Yht\Payment;
 
-use Yjpay\Crossborder\Foundation\App;
+use Yjpay\Yht\Foundation\App;
 
 class AggregatePay extends App{
 

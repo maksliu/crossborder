@@ -1,6 +1,6 @@
 <?php
 
-namespace Yjpay\Crossborder\Application;
+namespace Yjpay\Yht\Application;
 
 class Signature{
 

@@ -1,7 +1,7 @@
 <?php
-namespace Yjpay\Crossborder\Payment;
+namespace Yjpay\Yht\Payment;
 
-use Yjpay\Crossborder\Foundation\App;
+use Yjpay\Yht\Foundation\App;
 
 class FastPayTradeMergePay extends App {
     private $rules = array(

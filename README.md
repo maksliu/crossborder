@@ -19,7 +19,7 @@
 ```
 require_once __DIR__.'/vendor/autoload.php';
 
-use Yjpay\Crossborder\Application\RealName;
+use Yjpay\Yht\Application\RealName;
 
 $globalDeveloperInfo = [
   # 开发者ID
@@ -47,7 +47,7 @@ $result = $RealName->run();
 * 单笔支付
 
 ```
-use Yjpay\Crossborder\Payment\AggregatePay;
+use Yjpay\Yht\Payment\AggregatePay;
 
 $guoNeiDeveloperInfo = [
   # 开发者ID
@@ -119,7 +119,7 @@ $res = $FastPayTradeMergePay->run();
 * 支付单上传
 
 ```
-use Yjpay\Crossborder\Application\SinglePaymentUpload;
+use Yjpay\Yht\Application\SinglePaymentUpload;
 
 // $SinglePaymentUpload = new SinglePaymentUpload(array $DeveloperInfo ,array $parameter);
 
@@ -139,7 +139,7 @@ $result = $SinglePaymentUpload->run();
 ```
 require_once __DIR__.'/vendor/autoload.php';
 
-use Yjpay\Crossborder\Application\Signature;
+use Yjpay\Yht\Application\Signature;
 
 $signature = new Signature;
 $res = $signature->signature('6592639bb*********c2bd2500778c45',filter_input_array(INPUT_POST));

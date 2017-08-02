@@ -6,7 +6,7 @@
  * Time: 17:13
  */
 
-namespace Yjpay\Crossborder\Foundation;
+namespace Yjpay\Yht\Foundation;
 
 use Overtrue\Validation\Translator;
 use Overtrue\Validation\Factory as ValidatorFactory;
