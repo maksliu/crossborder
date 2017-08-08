@@ -33,7 +33,7 @@ class AggregatePay extends App{
         'macAddress'=>'between:0,48',
         'userEndIp'=>'ip',
         'paymentType'=>'in:PAYMENT_TYPE_SUPER,PAYMENT_TYPE_YJ,PAYMENT_TYPE_WECHAT,BALANCE,QUICKPAY,ONLINEBANK,THIRDSCANPAY,OFFLINEPAY',
-        'memberType'=>'in:MEMBER_TYPE_YIJI,MEMBER_TYPE_PATERN,MEMBER_TYPE_CARD',
+        'memberType'=>'required|in:MEMBER_TYPE_YIJI,MEMBER_TYPE_PATERN,MEMBER_TYPE_CARD',
         'name'=>'min:2',
         'stable'=>'boolean',
         'mobileNo'=>'numeric',

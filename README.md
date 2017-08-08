@@ -14,7 +14,7 @@
 
 在入口文件加入`require_once __DIR__.'/vendor/autoload.php';`
 
-* 实名认证
+* 实名认证 (接口名realName)
 
 ```
 require_once __DIR__.'/vendor/autoload.php';
@@ -44,7 +44,7 @@ $result = $RealName->run();
 
 ```
 
-* 单笔支付
+* 单笔支付、聚合支付 (接口名aggregatePay)
 
 ```
 use Yjpay\Yht\Payment\AggregatePay;
@@ -77,7 +77,7 @@ $AggregatePay = new AggregatePay($guoNeiDeveloperInfo,[
   $result = $AggregatePay->run();
 ```
 
-* 合并支付
+* 合并支付 (接口名fastPayTradeMergePay)
 
 ```
 // $FastPayTradeMergePay = new FastPayTradeMergePay(array $DeveloperInfo ,array $parameter [, string $payType]);
@@ -116,7 +116,7 @@ $FastPayTradeMergePay = new FastPayTradeMergePay($guoNeiDeveloperInfo,
 $res = $FastPayTradeMergePay->run();
 ```
 
-* 支付单上传
+* 支付单上传 (接口名singlePaymentUpload)
 
 ```
 use Yjpay\Yht\Application\SinglePaymentUpload;
