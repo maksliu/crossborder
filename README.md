@@ -69,6 +69,8 @@ $guoNeiDeveloperInfo = [
 
 $AggregatePay = new AggregatePay($guoNeiDeveloperInfo,[
   'merchOrderNo'=>date('YmdHis').mt_rand(1111,9999),
+  // 通常 sellerUserId 和 partnerId是相等的
+  'sellerUserId'=>$guoNeiDeveloperInfo['partnerId'],
   ...
   ],
   'PC'
