@@ -109,8 +109,8 @@ $FastPayTradeMergePay = new FastPayTradeMergePay($guoNeiDeveloperInfo,
   [
     'merchOrderNo'=>date('YmdHis').mt_rand(111111,999999),
     'tradeInfo'=>json_encode($tradeInfoData),
-    'returnUrl'=>'http://jbyefaun.xicp.net/returnUrl.php',
-    'notifyUrl'=>'http://jbyefaun.xicp.net/notifyUrl.php',
+    'returnUrl'=>'http://exdomain.com/returnUrl.php',
+    'notifyUrl'=>'http://exdomain.com/notifyUrl.php',
     ...
   ]
 );
